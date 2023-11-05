@@ -111,8 +111,7 @@ def start_chat(data):
 @socketio.on('send_message')
 def send_message(data):
     session_id = request.sid
-    chat_session = chat_sessions.get(session_id)
-    if chat_session:
+    if chat_session := chat_sessions.get(session_id):
         user_message = data['message']
         companion_message = chat_session['conversation'].run(user_message)
 

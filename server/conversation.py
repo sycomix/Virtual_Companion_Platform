@@ -8,8 +8,7 @@ from pprint import pprint
 
 def num_tokens_from_string(string: str, encoding_name: str) -> int:
     encoding = tiktoken.get_encoding(encoding_name)
-    num_tokens = len(encoding.encode(string))
-    return num_tokens
+    return len(encoding.encode(string))
 
 
 def get_conversation(user_id: str, companion_id: str):
@@ -19,7 +18,7 @@ def get_conversation(user_id: str, companion_id: str):
     .filter('id', 'eq', companion_id) \
     .execute() \
     .data[0]
-    
+
     chat_log = supabase.table('chat_logs') \
     .select('*') \
     .eq('user_id', user_id) \
@@ -64,6 +63,4 @@ def get_conversation(user_id: str, companion_id: str):
     )
 
     llm = ChatOpenAI(model_name='gpt-4')
-    conversation = ConversationChain(llm=llm, verbose=True, memory=memory, prompt=PROMPT)
-
-    return conversation
+    return ConversationChain(llm=llm, verbose=True, memory=memory, prompt=PROMPT)
